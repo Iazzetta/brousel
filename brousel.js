@@ -16,7 +16,6 @@ class Brousel {
         this.contents = null;
         this.contentsCount = null;
         this.build();
-        this.startEvents();
     }
     
     build() {
@@ -31,6 +30,7 @@ class Brousel {
         `
         let parentElementWidth = this.element.parentElement.offsetWidth;
         if ( this.arrows ) {
+            try { document.querySelector('.brousel-control').remove(); } catch(e) {}
             this.element.insertAdjacentHTML('afterend', `
                 <div class="brousel-control">
                     <div class="brousel-prev"><</div>
@@ -45,6 +45,7 @@ class Brousel {
             el.style.margin = `${this.margin_vertical}px ${this.margin_horizontal}px`;
         });
         this.element.style.height = this.contents[0].offsetHeight;
+        this.startEvents();
     }
   
     startEvents() {

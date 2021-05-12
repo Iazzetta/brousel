@@ -18,12 +18,14 @@ class Brousel {
     
     start() {
         let _this = this;
-        this.element.style.whiteSpace = 'nowrap';
-        this.element.style.overflowY = "hidden";
-        this.element.style.overflowX = "hidden";
-        this.element.style.textAlign = "left";
-        this.element.style.padding = "0em";
-        this.element.style.margin = "0em";
+        this.element.style.cssText = `
+            white-space: nowrap;
+            overflow: hidden;
+            text-align: left;
+            padding: 0em;
+            margin: 0em;
+            margin: 0em;
+        `
         let parentElementWidth = this.element.parentElement.clientWidth;
         this.totalWidthContent = parentElementWidth + ((parentElementWidth / this.slidesToShow) / this.slidesToShow);
         if ( this.arrows ) {

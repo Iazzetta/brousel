@@ -1,0 +1,29 @@
+{
+  "name": "brousel",
+  "version": "1.0.0",
+  "description": "A slider/carousel made in pure performance, minimalist and extremely light javascript.",
+  "main": "brousel.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iazzetta/brousel.git"
+  },
+  "keywords": [
+    "slider",
+    "carousel",
+    "minimalist",
+    "javascript"
+  ],
+  "author": "Guilherme Iazzetta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Iazzetta/brousel/issues"
+  },
+  "homepage": "https://github.com/Iazzetta/brousel#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-minify": "^3.1.0",
+  }
+}

@@ -3,52 +3,139 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
         <title>Brousel - Examples</title>
-        <link rel="stylesheet" href="brousel.css">
-        <script type="text/javascript" src="build/brousel.min.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <script type="text/javascript" src="./build/brousel-min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+        <script src="./src/highlight.pack.js"></script>
+        <script>hljs.highlightAll();</script>
     </head>
     <body>
         
-        <div class="container-brousel">
-            <ul class="brousel">
-                <li>
-                    <h3>1.com.br</h3>
-                </li>
-                <li>
-                    <h3>2.com.br</h3>
-                </li>
-                <li>
-                    <h3>3.com.br</h3>
-                </li>
-                <!-- <li>
-                    <h3>4.com.br</h3>
-                </li>
-                <li>
-                    <h3>5.com.br</h3>
-                </li>
-                <li>
-                    <h3>6.com.br</h3>
-                </li>
-                <li>
-                    <h3>7.com.br</h3>
-                </li>
-                <li>
-                    <h3>8.com.br</h3>
-                </li>
-                <li>
-                    <h3>9.com.br</h3>
-                </li>
-                <li>
-                    <h3>10.com.br</h3>
-                </li>
-                <li>
-                    <h3>11.com.br</h3>
-                </li>
-                <li>
-                    <h3>12.com.br</h3>
-                </li> -->
-            </ul>
+        <div class="container">
+            <h1>Usage</h1>
+            <pre><code class="javascript">
+new Brousel( document.querySelector('#element') , {
+    // enable/disable arrows navigation
+    arrows: true,
+    // enable/disable dots navigation
+    dots: true,
+    // slides to show each time in desktop
+    slidesToShow: 3,
+    // autoplay slide
+    autoplay: true,
+    // slide change speed
+    speed: 5000,
+    // margin top/bottom
+    margin_horizontal: 5,
+    // margin right/left
+    margin_vertical: 0,
+    // slides to show each time in mobile (size <= responsiveSizeToChange)
+    responsiveToShow: 1,
+    // width size to change slidesToShow to responsiveToShow
+    responsiveSizeToChange: 600,
+    // content of previous slide button
+    prev_content: '<',
+    // content of next slide button
+    next_content '>',
+    // content of dots
+    dot_content: '-'
+})
+            </code></pre>
+            
+            <h2>Example #1</h2>
+            
+            <div class="container-brousel">
+                <ul class="brousel" id="example-1">
+                    <li><h3>1.com.br</h3></li>
+                    <li><h3>2.com.br</h3></li>
+                    <li><h3>3.com.br</h3></li>
+                </ul>
+            </div>
+            
+            <pre>
+                <code class="html" data-target="example-1">
+<div class="container-brousel">
+    <ul class="brousel" id="example-1">
+        <li><h3>1.com.br</h3></li>
+        <li><h3>2.com.br</h3></li>
+        <li><h3>3.com.br</h3></li>
+    </ul>
+</div>
+                </code>
+            </pre>
+            
+            <hr/>
+            
+            <h2>Example #2</h2>
+            <div class="container-brousel">
+                <ul class="brousel" id="example-2">
+                    <li><h3>1.com.br</h3></li>
+                    <li><h3>2.com.br</h3></li>
+                    <li><h3>3.com.br</h3></li>
+                    <li><h3>4.com.br</h3></li>
+                    <li><h3>5.com.br</h3></li>
+                    <li><h3>6.com.br</h3></li>
+                    <li><h3>7.com.br</h3></li>
+                    <li><h3>8.com.br</h3></li>
+                    <li><h3>9.com.br</h3></li>
+                    <li><h3>10.com.br</h3></li>
+                    <li><h3>11.com.br</h3></li>
+                    <li><h3>12.com.br</h3></li>
+                </ul>
+            </div>
+            <pre>
+                <code class="html" data-target="example-2">
+<div class="container-brousel">
+    <ul class="brousel" id="example-2">
+        <li><h3>1.com.br</h3></li>
+        <li><h3>2.com.br</h3></li>
+        <li><h3>3.com.br</h3></li>
+        <li><h3>4.com.br</h3></li>
+        <li><h3>5.com.br</h3></li>
+        <li><h3>6.com.br</h3></li>
+        <li><h3>7.com.br</h3></li>
+        <li><h3>8.com.br</h3></li>
+        <li><h3>9.com.br</h3></li>
+        <li><h3>10.com.br</h3></li>
+        <li><h3>11.com.br</h3></li>
+        <li><h3>12.com.br</h3></li>
+    </ul>
+</div>
+                </code>
+            </pre>
         </div>
+        
+        <script>
+            document.querySelectorAll("code").forEach(function(element) {
+                element.innerHTML = element.innerHTML.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+            });
+
+            // Brousel Initialization
+            new Brousel( document.querySelector('#example-1') , {
+                arrows: false,
+                dots: true,
+                slidesToShow: 3,
+                autoplay: true,
+                speed: 5000,
+                margin_horizontal: 5,
+                responsiveToShow: 1,
+                responsiveSizeToChange: 600
+            })
+            
+            let bro2 = new Brousel( document.querySelector('#example-2') , {
+                arrows: true,
+                dots: false,
+                slidesToShow: 3,
+                autoplay: false,
+                speed: 1000,
+                margin_horizontal: 5,
+                responsiveToShow: 1,
+                responsiveSizeToChange: 600
+            })
+        </script>
         
     </body>
 </html>

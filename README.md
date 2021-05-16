@@ -5,6 +5,8 @@ A slider/carousel made in pure performance, minimalist and extremely light javas
 see demo: https://iazzetta.github.io/brousel/
 
 ```
-gzipped: 1.5KB
-minified: 6.8KB
+minified: 4.6KB
+gzipped: 1.7KB
+
+;)
 ```

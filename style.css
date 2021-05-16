@@ -1,3 +1,8 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
 /* Parent of Brousel. Define your width here! */
 .container-brousel {
     width: 100%;
@@ -6,14 +11,17 @@
     margin: 1em 0em;
 }
 
-/* Brousel CSS "Example" */
+/* Necessary */
 ul.brousel {
+    scroll-behavior: smooth;
     text-align: center;
 }
 ul.brousel li {
   display: inline-block;
   text-align: center;
 }
+
+/* Brousel CSS example */
 .brousel-control {
     text-align: center;
     margin-top: 1em;
@@ -44,8 +52,7 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 .container {
-    width: 600px;
+    max-width: 600px;
     margin: 1em auto;
-    /* border: 1px solid #e91e636b; */
     padding: 1em;
 }

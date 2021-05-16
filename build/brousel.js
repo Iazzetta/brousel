@@ -1,3 +1,7 @@
+/*
+    @name Brousel
+    @author Guilherme Iazzetta
+*/
 class Brousel {
     constructor(element, settings) {
         this.id = Math.random();
@@ -21,21 +25,16 @@ class Brousel {
         this.contents = null;
         this.contentsCount = null;
         this.autoplayInterval = null;
+        this.swipeControl = null;
         this.canSlide = true;
         
-        this.responsiveCheck( window );
         this.build();
-        
-        let _this = this;
-        window.addEventListener('resize', function(e) {
-            _this.responsiveCheck( e.target );
-            _this.build();
-        });
-        return this;
+
     }
     
     build() {
         let _this = this;
+        this.responsiveCheck( window );
         this.index = 0;
         this.parent = this.element.parentElement;
         this.element.setAttribute('id', this.id);
@@ -82,6 +81,21 @@ class Brousel {
         this.autoPlay();
     }
     
+    debounce(func, wait, immediate) {
+        var timeout;
+        return function() {
+            const context = this, args = arguments;
+            const later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            const callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    };
+    
     responsiveCheck( target ) {
         if (target.outerWidth <= this.responsiveSizeToChange)
             this.slidesCounter = this.responsiveToShow;
@@ -109,7 +123,6 @@ class Brousel {
     
     calculateSizes() {
         let parentElementWidth = this.parent.offsetWidth;
-        // console.log('parentElementWidth', parentElementWidth)
         this.contents = this.element.querySelectorAll('li');
         this.contentsCount = this.contents.length;
         this.contents.forEach((el) => {
@@ -124,11 +137,9 @@ class Brousel {
         if (this.arrows) {
             document.querySelector(`.brousel-prev[id="${this.id}"]`).addEventListener('click', (e) => {
                 _this.slideLeft()
-                _this.waitInteractionAndPlay();
             })
             document.querySelector(`.brousel-next[id="${this.id}"]`).addEventListener('click', (e) => {
                 _this.slideRight()
-                _this.waitInteractionAndPlay();
             })
         }
         if (this.dots) {
@@ -137,46 +148,66 @@ class Brousel {
                     let index = e.target.getAttribute('data-index');
                     _this.index = Number(index);
                     _this.slideIndex(_this.index);
-                    _this.waitInteractionAndPlay();
                 })
             })
         }
+        
+        window.addEventListener('resize', this.debounce(function(e) {
+            _this.build();
+        },200, false), false);
+        
+        this.element.addEventListener("touchstart",function(event){
+            if(event.touches.length === 1)
+                _this.swipeControl = event.touches.item(0).clientX;
+            else
+                _this.swipeControl = null;
+        });
+        
+        this.element.addEventListener("touchend",function(event){
+            let offset = 50;
+            if(_this.swipeControl){
+                let end = event.changedTouches.item(0).clientX;
+
+                if(end > _this.swipeControl + offset){
+                    _this.slideLeft();
+                }
+                if(end < _this.swipeControl - offset ){
+                    _this.slideRight();
+                }
+            }
+        });
     }
-    async slideIndex(index) {
+    async slideIndex() {
         if (!this.canSlide) return;
         this.canSlide = false;
-        this.index = index;
         if (this.dots) {
             try {
                 document.querySelectorAll(`.brousel-dot[id="${this.id}"]`).forEach(function(el){
                     el.classList.remove('selected');
                 })
-                document.querySelector(`.brousel-dot[id="${this.id}"][data-index="${index}"]`).classList.add('selected');
+                document.querySelector(`.brousel-dot[id="${this.id}"][data-index="${this.index}"]`).classList.add('selected');
             } catch(e) { /* Don't have dots */}
         }
-        this.element.scrollTo({
-            left: (this.index == 0 ? this.contents[index].clientLeft:this.contents[index].offsetLeft - 25),
-            behavior: 'smooth'
-        })
+        this.contents[this.index].scrollIntoView();
+        this.contents[this.index].scrollIntoView({block: "center", inline: "start"});
         await new Promise(res => setTimeout(res, 600));
         this.canSlide = true;
+        this.waitInteractionAndPlay();
     }
     slideLeft(){
-        let index = this.index;
-        if ( (index + this.slidesCounter) == this.slidesCounter ) {
-            index = this.contentsCount - this.slidesCounter;
+        if ( (this.index + this.slidesCounter) == this.slidesCounter ) {
+            this.index = this.contentsCount - this.slidesCounter;
         } else {
-            index -= this.slidesCounter;
+            this.index -= this.slidesCounter;
         }
-        this.slideIndex( index );
+        this.slideIndex( this.index );
     }
     slideRight(){
-        let index = this.index;
-        if ( (index + this.slidesCounter) == this.contentsCount ) {
-            index = 0;
+        if ( (this.index + this.slidesCounter) == this.contentsCount ) {
+            this.index = 0;
         } else {
-            index += this.slidesCounter;
+            this.index += this.slidesCounter;
         }
-        this.slideIndex( index );
+        this.slideIndex( this.index );
     }
 }

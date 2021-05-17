@@ -23,7 +23,7 @@ window.addEventListener('resize', _brouselDebounce(function(e) {
             _brouselList[i].build();
         }
     }
-}, 200, false), false);
+}, 500, false), false);
 var _window = typeof window !== 'undefined' ? window : this;
 class Brousel {
     constructor(element, settings) {

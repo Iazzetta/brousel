@@ -1,24 +1,9 @@
-* {
-    padding: 0;
-    margin: 0;
-}
-
 /* Parent of Brousel. Define your width here! */
 .container-brousel {
     width: 100%;
     background-color: #e91e63;
     padding: 1em 0em;
     margin: 1em 0em;
-}
-
-/* Necessary */
-ul.brousel {
-    scroll-behavior: smooth;
-    text-align: center;
-}
-ul.brousel li {
-  display: inline-block;
-  text-align: center;
 }
 
 /* Brousel CSS example */

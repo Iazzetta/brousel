@@ -24,6 +24,7 @@ window.addEventListener('resize', _brouselDebounce(function(e) {
         }
     }
 }, 200, false), false);
+
 class Brousel {
     constructor(element, settings) {
         this.id = Math.random();
@@ -159,7 +160,7 @@ class Brousel {
                 })
             })
         }
-        if (!this.eventsCreated) {    
+        if (!this.eventsCreated) {
             if (this.dots || this.arrows) {
                 this.element.addEventListener("touchstart",function(event){
                     if(event.touches.length === 1)
@@ -169,7 +170,7 @@ class Brousel {
                 }, {passive:true});
                 
                 this.element.addEventListener("touchend",function(event){
-                    let offset = 50;
+                    let offset = 100;
                     if(_this.swipeControl){
                         let end = event.changedTouches.item(0).clientX;
 
@@ -196,7 +197,7 @@ class Brousel {
                 document.querySelector(`.brousel-dot[id="${this.id}"][data-index="${this.index}"]`).classList.add('selected');
             } catch(e) { /* Don't have dots */}
         }
-        this.element.scrollTo({
+        this.element.scroll({
             left: this.contents[this.index].offsetLeft - this.element.offsetLeft,
             behavior: "smooth"
         });

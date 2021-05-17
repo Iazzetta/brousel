@@ -1,0 +1,16 @@
+/* Necessary */
+ul.brousel {
+    scroll-behavior: smooth;
+    text-align: center;
+}
+ul.brousel li {
+  display: inline-block;
+  text-align: center;
+}
+.brousel-control {
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}

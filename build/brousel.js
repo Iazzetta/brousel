@@ -145,11 +145,11 @@ class Brousel {
     }
     
     calculateSizes() {
-        let parentElementWidth = this.parent.offsetWidth;
+        let offsetWidth = this.element.offsetWidth;
         this.contents = this.element.querySelectorAll('li');
         this.contentsCount = this.contents.length;
         this.contents.forEach((el) => {
-            el.style.width = ((parentElementWidth / this.toShow) - (this.margin_horizontal * 2)) + 'px';
+            el.style.width = ((offsetWidth / this.toShow) - (this.margin_horizontal * 2)) + 'px';
             el.style.margin = `${this.margin_vertical}px ${this.margin_horizontal}px`;
         });
         this.element.style.height = this.contents[0].offsetHeight;

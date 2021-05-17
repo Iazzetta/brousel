@@ -56,6 +56,8 @@ class Brousel {
         this.eventsCreated = false;
         this.lastOffsetLeft = this.element.offsetLeft;
         this.parent = this.element.parentElement;
+        this.toShow = this.slidesToShow;
+        this.toScroll = this.slidesToScroll;
         this.easing = function (x, t, b, c, d) {
           return c * (t /= d) * t + b
         }

@@ -234,7 +234,7 @@ class Brousel {
         }
         this.animate_id = Math.random();
         let _ = this;
-        this.bscrollTo(this.contents[this.index].offsetLeft - this.element.offsetLeft, 300, function(){
+        this.bscrollTo(this.contents[this.index].offsetLeft - this.element.offsetLeft, 600, function(){
             _.canSlide = true;
             _.waitInteractionAndPlay();
         })

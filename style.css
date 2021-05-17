@@ -50,9 +50,10 @@ ul.brousel li {
 /* ~ things to make beautiful apresentation haha ~ */
 body {
     font-family: 'Roboto', sans-serif;
+    background-color: #fafafa;
 }
 a, a:visited {
-    color: #ec407a;
+    color: #e0004c;
 }
 .mtb { margin: 1em 0em; }
 .tac {text-align: center;}

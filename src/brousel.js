@@ -4,7 +4,7 @@
 */
 let _brouselList = [];
 let timerToResize = null;
-window.addEventListener('resize', function(e) {
+const brouselManagerEvent = function(){
     clearTimeout(timerToResize);
     timerToResize = setTimeout(function(){
         if (_brouselList.length > 0) {
@@ -13,7 +13,9 @@ window.addEventListener('resize', function(e) {
             }
         }
     }, 600);
-});
+}
+window.removeEventListener('resize', brouselManagerEvent);
+window.addEventListener('resize', brouselManagerEvent);
 var _window = typeof window !== 'undefined' ? window : this;
 class Brousel {
     constructor(element, settings) {

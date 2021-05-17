@@ -23,7 +23,7 @@ window.addEventListener('resize', _brouselDebounce(function(e) {
             _brouselList[i].build();
         }
     }
-}, 200, false), {passive:true});
+}, 200, false), false);
 class Brousel {
     constructor(element, settings) {
         this.id = Math.random();
@@ -141,26 +141,25 @@ class Brousel {
     }
   
     startControlEvents() {
-        if (!this.eventsCreated) {
-            let _this = this;
-            if (this.arrows) {
-                document.querySelector(`.brousel-prev[id="${this.id}"]`).addEventListener('click', (e) => {
-                    _this.slideLeft()
-                }, {passive:true})
-                document.querySelector(`.brousel-next[id="${this.id}"]`).addEventListener('click', (e) => {
-                    _this.slideRight()
-                }, {passive:true})
-            }
-            if (this.dots) {
-                document.querySelectorAll(`.brousel-dot[id="${this.id}"]`).forEach(function(el){
-                    el.addEventListener('click', function(e) {
-                        let index = e.target.getAttribute('data-index');
-                        _this.index = Number(index);
-                        _this.slideIndex(_this.index);
-                    }, {passive:true})
+        let _this = this;
+        if (this.arrows) {
+            document.querySelector(`.brousel-prev[id="${this.id}"]`).addEventListener('click', (e) => {
+                _this.slideLeft()
+            })
+            document.querySelector(`.brousel-next[id="${this.id}"]`).addEventListener('click', (e) => {
+                _this.slideRight()
+            })
+        }
+        if (this.dots) {
+            document.querySelectorAll(`.brousel-dot[id="${this.id}"]`).forEach(function(el){
+                el.addEventListener('click', function(e) {
+                    let index = e.target.getAttribute('data-index');
+                    _this.index = Number(index);
+                    _this.slideIndex(_this.index);
                 })
-            }
-            
+            })
+        }
+        if (!this.eventsCreated) {    
             if (this.dots || this.arrows) {
                 this.element.addEventListener("touchstart",function(event){
                     if(event.touches.length === 1)

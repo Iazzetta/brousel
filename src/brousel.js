@@ -216,7 +216,7 @@ class Brousel {
         this.canSlide = false;
         this.animate_id = Math.random();
         let _ = this;
-        this.bscrollTo(this.contents[this.index].offsetLeft - this.element.offsetLeft, 600, function(){
+        this.bscrollTo(this.contents[this.index].offsetLeft - this.element.offsetLeft, 100, function(){
             if (_.dots) {
                 try {
                     document.querySelectorAll(`.brousel-dot[id="${_.id}"]`).forEach(function(el){

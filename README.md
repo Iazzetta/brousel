@@ -1,6 +1,6 @@
 # Brousel
 
-A slider/carousel made in pure performance, minimalist and extremely light javascript.
+A minimalist slider / carousel library, with high performance and extremely light (1.8kb)
 
 ## Features
 

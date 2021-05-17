@@ -1,7 +1,7 @@
 {
   "name": "brousel",
   "version": "1.0.0",
-  "description": "A slider/carousel made in pure performance, minimalist and extremely light javascript.",
+  "description": "A minimalist slider / carousel library, with high performance and extremely light (1.8kb)",
   "main": "brousel.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

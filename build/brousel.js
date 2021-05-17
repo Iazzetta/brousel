@@ -15,8 +15,8 @@ const brouselManagerEvent = function(){
         }
     }, 600);
 }
-window.removeEventListener('resize', brouselManagerEvent, false);
-window.addEventListener('resize', brouselManagerEvent, false);
+window.removeEventListener('resize', brouselManagerEvent);
+window.addEventListener('resize', brouselManagerEvent);
 var _window = typeof window !== 'undefined' ? window : this;
 class Brousel {
     constructor(element, settings) {

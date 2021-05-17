@@ -103,7 +103,7 @@ class Brousel {
             this.startControlEvents();
         }
         
-        this.slideIndex(this.index);
+        // this.slideIndex(this.index);
         this.autoPlay();
     }
     

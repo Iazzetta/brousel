@@ -42,7 +42,9 @@ class Brousel {
         this.totalWidthContent = null;
         this.contents = null;
         this.contentsCount = null;
+        this.animationTimeout = null;
         this.autoplayInterval = null;
+        this.waitInteractionInterval = null;
         this.swipeControl = null;
         this.canSlide = true;
         this.eventsCreated = false;
@@ -103,7 +105,7 @@ class Brousel {
             this.startControlEvents();
         }
         
-        this.slideIndex(this.index);
+        this.slideIndex(this.index, false);
         this.autoPlay();
     }
     
@@ -131,7 +133,8 @@ class Brousel {
     waitInteractionAndPlay() {
         let _ = this;
         clearInterval(this.autoplayInterval);
-        setTimeout(function(){
+        clearInterval(this.waitInteractionInterval);
+        this.waitInteractionInterval = setTimeout(function(){
             _.autoPlay();
         }, 3000);
     }
@@ -215,21 +218,24 @@ class Brousel {
 
     async slideIndex() {
         if (!this.canSlide) return;
-        this.canSlide = false;
-        this.animate_id = Math.random();
         let _ = this;
-        this.bscrollTo(this.contents[this.index].offsetLeft - this.element.offsetLeft, 100, function(){
-            if (_.dots) {
-                try {
-                    document.querySelectorAll(`.brousel-dot[id="${_.id}"]`).forEach(function(el){
-                        el.classList.remove('selected');
-                    })
-                    document.querySelector(`.brousel-dot[id="${_.id}"][data-index="${_.index}"]`).classList.add('selected');
-                } catch(e) { /* Don't have dots */}
-            }
-            _.canSlide = true;
-            _.waitInteractionAndPlay();
-        })
+        clearTimeout(this.animationTimeout);
+        this.animationTimeout = setTimeout(function(){
+            this.animate_id = Math.random();
+            _.canSlide = false;
+            _.bscrollTo(this.contents[_.index].offsetLeft - _.element.offsetLeft, 100, function(){
+                if (_.dots) {
+                    try {
+                        document.querySelectorAll(`.brousel-dot[id="${_.id}"]`).forEach(function(el){
+                            el.classList.remove('selected');
+                        })
+                        document.querySelector(`.brousel-dot[id="${_.id}"][data-index="${_.index}"]`).classList.add('selected');
+                    } catch(e) { /* Don't have dots */}
+                }
+                _.canSlide = true;
+                _.waitInteractionAndPlay();
+            })
+        }, 300)
     }
     slideLeft(){
         if ( (this.index + this.toScroll) == this.toScroll ) {

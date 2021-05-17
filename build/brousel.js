@@ -8,15 +8,15 @@ let _brouselList = [];
 //     clearTimeout(timerToResize);
 //     timerToResize = setTimeout(function(){
 //         if (_brouselList.length > 0) {
-//             console.log("resize man")
 //             for (let i in _brouselList) {
 //                 _brouselList[i].build();
+//                 console.log("brouselManagerEvent")
 //             }
 //         }
 //     }, 600);
 // }
-// window.removeEventListener('resize', brouselManagerEvent);
-// window.addEventListener('resize', brouselManagerEvent);
+// window.removeEventListener('resize', brouselManagerEvent, false);
+// window.addEventListener('resize', brouselManagerEvent, false);
 var _window = typeof window !== 'undefined' ? window : this;
 class Brousel {
     constructor(element, settings) {
@@ -58,7 +58,7 @@ class Brousel {
         }
         
         this.build();
-        _brouselList.push(this);
+        // _brouselList.push(this);
     }
     
     build() {

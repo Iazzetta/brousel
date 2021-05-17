@@ -2,6 +2,28 @@
     @name Brousel
     @author Guilherme Iazzetta
 */
+let _brouselList = [];
+let _brouselDebounce = function(func, wait, immediate) {
+    var timeout;
+    return function() {
+        const context = this, args = arguments;
+        const later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        const callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+};
+window.addEventListener('resize', _brouselDebounce(function(e) {
+    if (_brouselList.length > 0) {
+        for (let i in _brouselList) {
+            _brouselList[i].build();
+        }
+    }
+}, 200, false), {passive:true});
 class Brousel {
     constructor(element, settings) {
         this.id = Math.random();
@@ -27,9 +49,10 @@ class Brousel {
         this.autoplayInterval = null;
         this.swipeControl = null;
         this.canSlide = true;
+        this.eventsCreated = false;
         
         this.build();
-
+        _brouselList.push(this);
     }
     
     build() {
@@ -81,21 +104,6 @@ class Brousel {
         this.autoPlay();
     }
     
-    debounce(func, wait, immediate) {
-        var timeout;
-        return function() {
-            const context = this, args = arguments;
-            const later = function() {
-                timeout = null;
-                if (!immediate) func.apply(context, args);
-            };
-            const callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func.apply(context, args);
-        };
-    };
-    
     responsiveCheck( target ) {
         if (target.outerWidth <= this.responsiveSizeToChange)
             this.slidesCounter = this.responsiveToShow;
@@ -133,49 +141,50 @@ class Brousel {
     }
   
     startControlEvents() {
-        const _this = this;
-        if (this.arrows) {
-            document.querySelector(`.brousel-prev[id="${this.id}"]`).addEventListener('click', (e) => {
-                _this.slideLeft()
-            })
-            document.querySelector(`.brousel-next[id="${this.id}"]`).addEventListener('click', (e) => {
-                _this.slideRight()
-            })
-        }
-        if (this.dots) {
-            document.querySelectorAll(`.brousel-dot[id="${this.id}"]`).forEach(function(el){
-                el.addEventListener('click', (e) => {
-                    let index = e.target.getAttribute('data-index');
-                    _this.index = Number(index);
-                    _this.slideIndex(_this.index);
-                })
-            })
-        }
-        
-        window.addEventListener('resize', this.debounce(function(e) {
-            _this.build();
-        },200, false), false);
-        
-        this.element.addEventListener("touchstart",function(event){
-            if(event.touches.length === 1)
-                _this.swipeControl = event.touches.item(0).clientX;
-            else
-                _this.swipeControl = null;
-        });
-        
-        this.element.addEventListener("touchend",function(event){
-            let offset = 50;
-            if(_this.swipeControl){
-                let end = event.changedTouches.item(0).clientX;
-
-                if(end > _this.swipeControl + offset){
-                    _this.slideLeft();
-                }
-                if(end < _this.swipeControl - offset ){
-                    _this.slideRight();
-                }
+        if (!this.eventsCreated) {
+            let _this = this;
+            if (this.arrows) {
+                document.querySelector(`.brousel-prev[id="${this.id}"]`).addEventListener('click', (e) => {
+                    _this.slideLeft()
+                }, {passive:true})
+                document.querySelector(`.brousel-next[id="${this.id}"]`).addEventListener('click', (e) => {
+                    _this.slideRight()
+                }, {passive:true})
             }
-        });
+            if (this.dots) {
+                document.querySelectorAll(`.brousel-dot[id="${this.id}"]`).forEach(function(el){
+                    el.addEventListener('click', function(e) {
+                        let index = e.target.getAttribute('data-index');
+                        _this.index = Number(index);
+                        _this.slideIndex(_this.index);
+                    }, {passive:true})
+                })
+            }
+            
+            if (this.dots || this.arrows) {
+                this.element.addEventListener("touchstart",function(event){
+                    if(event.touches.length === 1)
+                        _this.swipeControl = event.touches.item(0).clientX;
+                    else
+                        _this.swipeControl = null;
+                }, {passive:true});
+                
+                this.element.addEventListener("touchend",function(event){
+                    let offset = 50;
+                    if(_this.swipeControl){
+                        let end = event.changedTouches.item(0).clientX;
+
+                        if(end > _this.swipeControl + offset){
+                            _this.slideLeft();
+                        }
+                        if(end < _this.swipeControl - offset ){
+                            _this.slideRight();
+                        }
+                    }
+                }, {passive:true});
+                this.eventsCreated = true;
+            }
+        }
     }
     async slideIndex() {
         if (!this.canSlide) return;
@@ -188,8 +197,10 @@ class Brousel {
                 document.querySelector(`.brousel-dot[id="${this.id}"][data-index="${this.index}"]`).classList.add('selected');
             } catch(e) { /* Don't have dots */}
         }
-        this.contents[this.index].scrollIntoView();
-        this.contents[this.index].scrollIntoView({block: "center", inline: "start"});
+        this.element.scrollTo({
+            left: this.contents[this.index].offsetLeft - this.element.offsetLeft,
+            behavior: "smooth"
+        });
         await new Promise(res => setTimeout(res, 600));
         this.canSlide = true;
         this.waitInteractionAndPlay();

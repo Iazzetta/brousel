@@ -3,20 +3,20 @@
     @author Guilherme Iazzetta
 */
 let _brouselList = [];
-let timerToResize = null;
-const brouselManagerEvent = function(){
-    clearTimeout(timerToResize);
-    timerToResize = setTimeout(function(){
-        if (_brouselList.length > 0) {
-            console.log("resize man")
-            for (let i in _brouselList) {
-                _brouselList[i].build();
-            }
-        }
-    }, 600);
-}
-window.removeEventListener('resize', brouselManagerEvent);
-window.addEventListener('resize', brouselManagerEvent);
+// let timerToResize = null;
+// const brouselManagerEvent = function(){
+//     clearTimeout(timerToResize);
+//     timerToResize = setTimeout(function(){
+//         if (_brouselList.length > 0) {
+//             console.log("resize man")
+//             for (let i in _brouselList) {
+//                 _brouselList[i].build();
+//             }
+//         }
+//     }, 600);
+// }
+// window.removeEventListener('resize', brouselManagerEvent);
+// window.addEventListener('resize', brouselManagerEvent);
 var _window = typeof window !== 'undefined' ? window : this;
 class Brousel {
     constructor(element, settings) {

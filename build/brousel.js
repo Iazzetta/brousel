@@ -37,10 +37,12 @@ class Brousel {
         this.dots = settings.dots;
         this.autoplay = settings.autoplay;
         this.speed = settings.speed || 3000;
-        this.slidesCounter = null;
+        this.speed = settings.speed || 3000;
+        this.toScroll = null;
         this.slidesToShow = settings.slidesToShow || 3;
         this.slidesToScroll = settings.slidesToScroll || this.slidesToShow;
         this.responsiveToShow = settings.responsiveToShow || 1;
+        this.responsiveToScroll = settings.responsiveToScroll || this.responsiveToShow;
         this.responsiveSizeToChange = settings.responsiveSizeToChange || 400;
         this.prev_content = settings.prev_content || '<';
         this.next_content = settings.next_content || '>';
@@ -81,7 +83,7 @@ class Brousel {
         this.calculateSizes();
         
         // get number of indexes
-        let nidx = (this.contentsCount / this.slidesCounter);
+        let nidx = (this.contentsCount / this.toScroll);
         this.nIndexes = nidx > 0 ? nidx-1:0;
         
         // dots and arrows if more than 1 index
@@ -91,7 +93,7 @@ class Brousel {
             let dots = "";
             if ( this.dots ) {
                 for(let i = 0; i <= this.nIndexes; i++)
-                dots += `<button data-index="${i*this.slidesCounter}" class="brousel-dot${i == 0 ? ' selected':''}" id="${this.id}">${this.dot_content}</button>`;
+                dots += `<button data-index="${i*this.toScroll}" class="brousel-dot${i == 0 ? ' selected':''}" id="${this.id}">${this.dot_content}</button>`;
             }
             // build controls
             let insertHtml = `
@@ -112,10 +114,14 @@ class Brousel {
     }
     
     responsiveCheck( target ) {
-        if (target.outerWidth <= this.responsiveSizeToChange)
-            this.slidesCounter = this.responsiveToShow;
-        else
-            this.slidesCounter = this.slidesToScroll;
+        if (target.outerWidth <= this.responsiveSizeToChange){
+            this.toScroll = this.responsiveToScroll;
+            this.toShow = this.responsiveToShow;
+        }
+        else {
+            this.toScroll = this.slidesToScroll;
+            this.toShow = this.slidesToShow;
+        }
     }
     /* If autoplays true, number of Dots > 0, start slide! */
     autoPlay() {
@@ -141,7 +147,7 @@ class Brousel {
         this.contents = this.element.querySelectorAll('li');
         this.contentsCount = this.contents.length;
         this.contents.forEach((el) => {
-            el.style.width = ((parentElementWidth / this.slidesCounter) - (this.margin_horizontal * 2)) + 'px';
+            el.style.width = ((parentElementWidth / this.toShow) - (this.margin_horizontal * 2)) + 'px';
             el.style.margin = `${this.margin_vertical}px ${this.margin_horizontal}px`;
         });
         this.element.style.height = this.contents[0].offsetHeight;
@@ -232,18 +238,18 @@ class Brousel {
         })
     }
     slideLeft(){
-        if ( (this.index + this.slidesCounter) == this.slidesCounter ) {
-            this.index = this.contentsCount - this.slidesCounter;
+        if ( (this.index + this.toScroll) == this.toScroll ) {
+            this.index = this.contentsCount - this.toScroll;
         } else {
-            this.index -= this.slidesCounter;
+            this.index -= this.toScroll;
         }
         this.slideIndex( this.index );
     }
     slideRight(){
-        if ( (this.index + this.slidesCounter) == this.contentsCount ) {
+        if ( (this.index + this.toScroll) == this.contentsCount ) {
             this.index = 0;
         } else {
-            this.index += this.slidesCounter;
+            this.index += this.toScroll;
         }
         this.slideIndex( this.index );
     }

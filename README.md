@@ -21,7 +21,7 @@ A minimalist slider / carousel library, with high performance and extremely ligh
 
 ```
 minified: 5.7KB
-gzipped: 1.8KB
+gzipped: 2KB
 
 👽
 ```

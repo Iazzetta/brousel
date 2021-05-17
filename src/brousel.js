@@ -3,27 +3,17 @@
     @author Guilherme Iazzetta
 */
 let _brouselList = [];
-let _brouselDebounce = function(func, wait, immediate) {
-    var timeout;
-    return function() {
-        const context = this, args = arguments;
-        const later = function() {
-            timeout = null;
-            if (!immediate) func.apply(context, args);
-        };
-        const callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
-    };
-};
-window.addEventListener('resize', _brouselDebounce(function(e) {
-    if (_brouselList.length > 0) {
-        for (let i in _brouselList) {
-            _brouselList[i].build();
+let timerToResize = null;
+window.addEventListener('resize', function(e) {
+    clearTimeout(timerToResize);
+    timerToResize = setTimeout(function(){
+        if (_brouselList.length > 0) {
+            for (let i in _brouselList) {
+                _brouselList[i].build();
+            }
         }
-    }
-}, 500, false), false);
+    }, 600);
+});
 var _window = typeof window !== 'undefined' ? window : this;
 class Brousel {
     constructor(element, settings) {
@@ -224,17 +214,17 @@ class Brousel {
     async slideIndex() {
         if (!this.canSlide) return;
         this.canSlide = false;
-        if (this.dots) {
-            try {
-                document.querySelectorAll(`.brousel-dot[id="${this.id}"]`).forEach(function(el){
-                    el.classList.remove('selected');
-                })
-                document.querySelector(`.brousel-dot[id="${this.id}"][data-index="${this.index}"]`).classList.add('selected');
-            } catch(e) { /* Don't have dots */}
-        }
         this.animate_id = Math.random();
         let _ = this;
         this.bscrollTo(this.contents[this.index].offsetLeft - this.element.offsetLeft, 600, function(){
+            if (this.dots) {
+                try {
+                    document.querySelectorAll(`.brousel-dot[id="${_.id}"]`).forEach(function(el){
+                        el.classList.remove('selected');
+                    })
+                    document.querySelector(`.brousel-dot[id="${_.id}"][data-index="${_.index}"]`).classList.add('selected');
+                } catch(e) { /* Don't have dots */}
+            }
             _.canSlide = true;
             _.waitInteractionAndPlay();
         })

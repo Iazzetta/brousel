@@ -51,6 +51,14 @@ ul.brousel li {
 body {
     font-family: 'Roboto', sans-serif;
 }
+a, a:visited {
+    color: #ec407a;
+}
+.mtb { margin: 1em 0em; }
+.tac {text-align: center;}
+.logo {
+    color: #e91e63;
+}
 .container {
     max-width: 700px;
     margin: 1em auto;

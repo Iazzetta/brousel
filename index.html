@@ -5,7 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-        <title>Brousel - Examples</title>
+        <title>brousel.js</title>
+        <meta name="description" content="A minimalist slider / carousel library, with high performance and extremely light (1.8kb)">
+        <meta name="author" content="Guilherme Iazzetta">
+        <meta name="keywords" content="slider, carousel, javascript, minimal, light, lib">
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
         <script src="highlight.pack.js"></script>
@@ -14,7 +17,14 @@
     <body>
         
         <div class="container">
-            <h1>Usage</h1>
+            
+            
+            <div class="mtb tac">
+                <h1 class="logo mtb">brousel.js</h1>
+                <p>A minimalist slider / carousel library, with high performance and extremely light (1.8kb).</p>
+                <p><a href="https://github.com/Iazzetta/brousel">open source</a></p>
+            </div>
+            
             <pre><code class="javascript">
 new Brousel( document.querySelector('#element') , {
     // enable/disable arrows navigation
@@ -44,18 +54,19 @@ new Brousel( document.querySelector('#element') , {
 })
             </code></pre>
             
-            <h2>Example #1</h2>
-            
-            <div class="container-brousel">
-                <ul class="brousel" id="example-1">
-                    <li><h3>1.com.br</h3></li>
-                    <li><h3>2.com.br</h3></li>
-                    <li><h3>3.com.br</h3></li>
-                </ul>
-            </div>
-            
-            <pre>
-                <code class="html" data-target="example-1">
+            <div class="mtb">
+                <h2>Example #1</h2>
+                
+                <div class="container-brousel">
+                    <ul class="brousel" id="example-1">
+                        <li><h3>1.com.br</h3></li>
+                        <li><h3>2.com.br</h3></li>
+                        <li><h3>3.com.br</h3></li>
+                    </ul>
+                </div>
+                
+                <pre>
+                    <code class="html" data-target="example-1">
 <div class="container-brousel">
     <ul class="brousel" id="example-1">
         <li><h3>1.com.br</h3></li>
@@ -63,30 +74,30 @@ new Brousel( document.querySelector('#element') , {
         <li><h3>3.com.br</h3></li>
     </ul>
 </div>
-                </code>
-            </pre>
-            
-            <hr/>
-            
-            <h2>Example #2</h2>
-            <div class="container-brousel">
-                <ul class="brousel" id="example-2">
-                    <li><h3>1.com.br</h3></li>
-                    <li><h3>2.com.br</h3></li>
-                    <li><h3>3.com.br</h3></li>
-                    <li><h3>4.com.br</h3></li>
-                    <li><h3>5.com.br</h3></li>
-                    <li><h3>6.com.br</h3></li>
-                    <li><h3>7.com.br</h3></li>
-                    <li><h3>8.com.br</h3></li>
-                    <li><h3>9.com.br</h3></li>
-                    <li><h3>10.com.br</h3></li>
-                    <li><h3>11.com.br</h3></li>
-                    <li><h3>12.com.br</h3></li>
-                </ul>
+                    </code>
+                </pre>
             </div>
-            <pre>
-                <code class="html" data-target="example-2">
+            
+            <div class="mtb">
+                <h2>Example #2</h2>
+                <div class="container-brousel">
+                    <ul class="brousel" id="example-2">
+                        <li><h3>1.com.br</h3></li>
+                        <li><h3>2.com.br</h3></li>
+                        <li><h3>3.com.br</h3></li>
+                        <li><h3>4.com.br</h3></li>
+                        <li><h3>5.com.br</h3></li>
+                        <li><h3>6.com.br</h3></li>
+                        <li><h3>7.com.br</h3></li>
+                        <li><h3>8.com.br</h3></li>
+                        <li><h3>9.com.br</h3></li>
+                        <li><h3>10.com.br</h3></li>
+                        <li><h3>11.com.br</h3></li>
+                        <li><h3>12.com.br</h3></li>
+                    </ul>
+                </div>
+                <pre>
+                    <code class="html" data-target="example-2">
 <div class="container-brousel">
     <ul class="brousel" id="example-2">
         <li><h3>1.com.br</h3></li>
@@ -103,8 +114,9 @@ new Brousel( document.querySelector('#element') , {
         <li><h3>12.com.br</h3></li>
     </ul>
 </div>
-                </code>
-            </pre>
+                    </code>
+                </pre>
+            </div>
         </div>
         
         <script type="text/javascript" src="./build/brousel-min.js"></script>

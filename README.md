@@ -2,10 +2,6 @@
 
 A minimalist slider / carousel library, with high performance and extremely light (1.8kb)
 
-## External lib
-
-- smoothscroll (https://github.com/iamdustan/smoothscroll/)
-
 ## Features
 
 - Swipe right/left events
@@ -24,7 +20,7 @@ A minimalist slider / carousel library, with high performance and extremely ligh
 - https://iazzetta.github.io/brousel/
 
 ```
-minified: 9KB
+minified: 5.7KB
 gzipped: 1.8KB
 
 👽

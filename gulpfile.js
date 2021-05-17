@@ -6,7 +6,6 @@ const concat = require('gulp-concat');
  
 gulp.task('compress-js', function() {
     return gulp.src([
-            './src/smoothscroll.min.js',
             './src/brousel.js'
         ])
         .pipe(concat('brousel.js'))

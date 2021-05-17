@@ -8,6 +8,7 @@ const brouselManagerEvent = function(){
     clearTimeout(timerToResize);
     timerToResize = setTimeout(function(){
         if (_brouselList.length > 0) {
+            console.log("resize man")
             for (let i in _brouselList) {
                 _brouselList[i].build();
             }

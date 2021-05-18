@@ -64,7 +64,7 @@ class Brousel {
         // this.responsiveCheck( window.outerWidth );
         this.index = 0;
         this.parent = this.element.parentElement;
-        this.element.setAttribute('id', this.id);
+        this.element.setAttribute('bid', this.id);
         this.element.style.cssText = `
             white-space: nowrap;
             overflow: hidden;

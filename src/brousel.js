@@ -61,7 +61,7 @@ class Brousel {
     
     build() {
         let _ = this;
-        this.responsiveCheck( window );
+        // this.responsiveCheck( window.outerWidth );
         this.index = 0;
         this.parent = this.element.parentElement;
         this.element.setAttribute('id', this.id);
@@ -108,8 +108,8 @@ class Brousel {
         this.autoPlay();
     }
     
-    responsiveCheck( target ) {
-        if (target.outerWidth <= this.responsiveSizeToChange){
+    responsiveCheck( width ) {
+        if (width <= this.responsiveSizeToChange){
             this.toScroll = this.responsiveToScroll;
             this.toShow = this.responsiveToShow;
         }
@@ -140,6 +140,7 @@ class Brousel {
     
     calculateSizes() {
         let offsetWidth = this.element.offsetWidth;
+        this.responsiveCheck( offsetWidth );
         this.contents = this.element.querySelectorAll('li');
         this.contentsCount = this.contents.length;
         this.contents.forEach((el) => {

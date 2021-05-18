@@ -24,6 +24,16 @@
                 <p><a href="https://github.com/Iazzetta/brousel">open source</a></p>
             </div>
             
+            <pre><code class="html">
+<!-- Very simple to use! -->
+<div class="container-brousel">
+    <ul class="brousel" id="example-1">
+        <li><h3>simple</h3></li>
+        <li><h3>performatic</h3></li>
+        <li><h3>lightweight</h3></li>
+    </ul>
+</div>
+            </code></pre>
             <pre><code class="javascript">
 new Brousel( document.querySelector('#element') , {
     // enable/disable arrows navigation
@@ -42,16 +52,37 @@ new Brousel( document.querySelector('#element') , {
     margin_horizontal: 5,
     // margin right/left
     margin_vertical: 0,
-    // slides to show each time in mobile (size <= responsiveSizeToChange)
-    responsiveToShow: 1,
-    // width size to change slidesToShow to responsiveToShow
-    responsiveSizeToChange: 600,
+    // create breakpoints to change responsive view
+    responsive: [
+        {
+            breakpoint: 900,
+            settings: {
+                autoplay: false,
+                arrows: false,
+                dots: false,
+                toScroll: 1,
+                toShow: 2
+            }
+        },
+        {
+            breakpoint: 400,
+            settings: {
+                autoplay: true,
+                toScroll: 1,
+                toShow: 1,
+                arrows: false,
+                dots: true
+            }
+        }
+    ],
     // content of previous slide button
     prev_content: '<',
     // content of next slide button
     next_content '>',
     // content of dots
-    dot_content: '-'
+    dot_content: '-',
+    //debug this of brousel
+    debug: false
 })
             </code></pre>
             
@@ -67,14 +98,25 @@ new Brousel( document.querySelector('#element') , {
                 </div>
                 
                 <pre>
-                    <code class="html" data-target="example-1">
-<div class="container-brousel">
-    <ul class="brousel" id="example-1">
-        <li><h3>1.com.br</h3></li>
-        <li><h3>2.com.br</h3></li>
-        <li><h3>3.com.br</h3></li>
-    </ul>
-</div>
+                    <code class="javascript" data-target="example-1">
+new Brousel( document.querySelector('#example-1') , {
+    arrows: false,
+    dots: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: false,
+    speed: 5000,
+    margin_horizontal: 5,
+    responsive: [
+        {
+            breakpoint: 450, // <= 450px
+            settings: {
+                toShow: 1,
+                toScroll: 1
+            }
+        }
+    ]
+})
                     </code>
                 </pre>
             </div>
@@ -98,23 +140,32 @@ new Brousel( document.querySelector('#element') , {
                     </ul>
                 </div>
                 <pre>
-                    <code class="html" data-target="example-2">
-<div class="container-brousel">
-    <ul class="brousel" id="example-2">
-        <li><h3>1.com.br</h3></li>
-        <li><h3>2.com.br</h3></li>
-        <li><h3>3.com.br</h3></li>
-        <li><h3>4.com.br</h3></li>
-        <li><h3>5.com.br</h3></li>
-        <li><h3>6.com.br</h3></li>
-        <li><h3>7.com.br</h3></li>
-        <li><h3>8.com.br</h3></li>
-        <li><h3>9.com.br</h3></li>
-        <li><h3>10.com.br</h3></li>
-        <li><h3>11.com.br</h3></li>
-        <li><h3>12.com.br</h3></li>
-    </ul>
-</div>
+                    <code class="javascript" data-target="example-2">
+new Brousel( document.querySelector('#example-2') , {
+    arrows: true,
+    dots: false,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    autoplay: true,
+    speed: 1000,
+    margin_horizontal: 5,
+    responsive: [
+        {
+            breakpoint: 450, // <= 450px
+            settings: {
+                toShow: 2,
+                toScroll: 1
+            }
+        },
+        {
+            breakpoint: 350, // <= 350
+            settings: {
+                toShow: 1,
+                toScroll: 1
+            }
+        }
+    ]
+})
                     </code>
                 </pre>
             </div>
@@ -131,22 +182,45 @@ new Brousel( document.querySelector('#element') , {
                 arrows: false,
                 dots: true,
                 slidesToShow: 3,
+                slidesToScroll: 1,
                 autoplay: false,
                 speed: 5000,
                 margin_horizontal: 5,
-                responsiveToShow: 1,
-                responsiveSizeToChange: 600
+                responsive: [
+                    {
+                        breakpoint: 450, // <= 450px
+                        settings: {
+                            toShow: 1,
+                            toScroll: 1
+                        }
+                    }
+                ]
             })
             
-            let bro2 = new Brousel( document.querySelector('#example-2') , {
+            new Brousel( document.querySelector('#example-2') , {
                 arrows: true,
                 dots: false,
                 slidesToShow: 3,
+                slidesToScroll: 3,
                 autoplay: true,
                 speed: 1000,
                 margin_horizontal: 5,
-                responsiveToShow: 1,
-                responsiveSizeToChange: 600
+                responsive: [
+                    {
+                        breakpoint: 450, // <= 450px
+                        settings: {
+                            toShow: 2,
+                            toScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 350, // <= 350
+                        settings: {
+                            toShow: 1,
+                            toScroll: 1
+                        }
+                    }
+                ]
             })
         </script>
         <script src="highlight.pack.js"></script>

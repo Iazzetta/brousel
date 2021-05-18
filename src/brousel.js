@@ -12,7 +12,7 @@ const brouselManagerEvent = function(){
                 _brouselList[i].build();
             }
         }
-    }, 600);
+    }, 150);
 }
 window.addEventListener('resize', brouselManagerEvent);
 var _window = typeof window !== 'undefined' ? window : this;
@@ -21,7 +21,7 @@ class Brousel {
         this.id = Math.random();
         this.element = element;
         this.index = 0;
-        this.width = settings.width || '100%';
+        this.width = null;
         this.margin_horizontal = settings.margin_horizontal || 0;
         this.margin_vertical = settings.margin_vertical || 0;
         this.arrows = settings.arrows;
@@ -30,11 +30,9 @@ class Brousel {
         this.speed = settings.speed || 3000;
         this.speed = settings.speed || 3000;
         this.toScroll = null;
+        this.responsive = settings.responsive || [];
         this.slidesToShow = settings.slidesToShow || 3;
         this.slidesToScroll = settings.slidesToScroll || this.slidesToShow;
-        this.responsiveToShow = settings.responsiveToShow || 1;
-        this.responsiveToScroll = settings.responsiveToScroll || this.responsiveToShow;
-        this.responsiveSizeToChange = settings.responsiveSizeToChange || 400;
         this.prev_content = settings.prev_content || '<';
         this.next_content = settings.next_content || '>';
         this.dot_content = settings.dot_content || '-';
@@ -51,6 +49,7 @@ class Brousel {
         this.parent = this.element.parentElement;
         this.toShow = this.slidesToShow;
         this.toScroll = this.slidesToScroll;
+        this.debug = settings.debug || false;
         this.easing = function (x, t, b, c, d) {
           return c * (t /= d) * t + b
         }
@@ -61,7 +60,6 @@ class Brousel {
     
     build() {
         let _ = this;
-        // this.responsiveCheck( window.outerWidth );
         this.index = 0;
         this.parent = this.element.parentElement;
         this.element.setAttribute('bid', this.id);
@@ -108,14 +106,22 @@ class Brousel {
         this.autoPlay();
     }
     
-    responsiveCheck( width ) {
-        if (width <= this.responsiveSizeToChange){
-            this.toScroll = this.responsiveToScroll;
-            this.toShow = this.responsiveToShow;
+    responsiveCheck() {
+        // update width
+        this.width = this.element.offsetWidth;
+        
+        // default
+        this.toScroll = this.slidesToScroll;
+        this.toShow = this.slidesToShow;
+        
+        // check responsive
+        for (let i in this.responsive) {
+            if ( this.width <= this.responsive[i].breakpoint ) {
+                for (let key in this.responsive[i].settings) this[key] = this.responsive[i].settings[key];
+            }
         }
-        else {
-            this.toScroll = this.slidesToScroll;
-            this.toShow = this.slidesToShow;
+        if (this.debug) {
+            console.log(this)
         }
     }
     /* If autoplays true, number of Dots > 0, start slide! */
@@ -139,12 +145,11 @@ class Brousel {
     }
     
     calculateSizes() {
-        let offsetWidth = this.element.offsetWidth;
-        this.responsiveCheck( offsetWidth );
+        this.responsiveCheck();
         this.contents = this.element.querySelectorAll('li');
         this.contentsCount = this.contents.length;
         this.contents.forEach((el) => {
-            el.style.width = ((offsetWidth / this.toShow) - (this.margin_horizontal * 2)) + 'px';
+            el.style.width = ((this.width / this.toShow) - (this.margin_horizontal * 2)) + 'px';
             el.style.margin = `${this.margin_vertical}px ${this.margin_horizontal}px`;
         });
         this.element.style.height = this.contents[0].offsetHeight;

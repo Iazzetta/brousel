@@ -10,12 +10,10 @@ const brouselManagerEvent = function(){
         if (_brouselList.length > 0) {
             for (let i in _brouselList) {
                 _brouselList[i].build();
-                console.log("brouselManagerEvent")
             }
         }
     }, 600);
 }
-window.removeEventListener('resize', brouselManagerEvent);
 window.addEventListener('resize', brouselManagerEvent);
 var _window = typeof window !== 'undefined' ? window : this;
 class Brousel {
@@ -200,7 +198,7 @@ class Brousel {
     bscrollTo(scrollTarget, scrollDuration, callback) {
         var _ = this;
         var start = new Date().getTime()
-        var animateIndex = _.animate_id
+        var animateIndex = _.animate_id;
         var animate = function () {
             var now = new Date().getTime() - start
             _.element.scrollLeft =
@@ -222,9 +220,9 @@ class Brousel {
         let _ = this;
         clearTimeout(this.animationTimeout);
         this.animationTimeout = setTimeout(function(){
-            this.animate_id = Math.random();
+            _.animate_id = Math.random();
             _.canSlide = false;
-            _.bscrollTo(this.contents[_.index].offsetLeft - _.element.offsetLeft, 100, function(){
+            _.bscrollTo(_.contents[_.index].offsetLeft - _.element.offsetLeft, 100, function(){
                 if (_.dots) {
                     try {
                         document.querySelectorAll(`.brousel-dot[id="${_.id}"]`).forEach(function(el){

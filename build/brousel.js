@@ -234,7 +234,7 @@ class Brousel {
                 _.canSlide = true;
                 _.waitInteractionAndPlay();
             })
-        }, 300)
+        }, 100)
     }
     slideLeft(){
         if ( (this.index + this.toScroll) == this.toScroll ) {

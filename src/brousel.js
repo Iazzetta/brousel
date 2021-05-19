@@ -69,9 +69,6 @@ class Brousel {
             white-space: nowrap;
             overflow: hidden;
             text-align: left;
-            padding: 0em;
-            margin: 0em;
-            margin: 0em;
         `
         
         // calc sizes of parent and build items size

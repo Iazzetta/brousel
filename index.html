@@ -48,10 +48,11 @@ new Brousel( document.querySelector('#element') , {
     autoplay: true,
     // slide change speed
     speed: 5000,
-    // margin top/bottom
-    margin_horizontal: 5,
-    // margin right/left
-    margin_vertical: 0,
+    // margins in pixel
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
     // create breakpoints to change responsive view
     responsive: [
         {
@@ -101,18 +102,20 @@ new Brousel( document.querySelector('#element') , {
                     <code class="javascript" data-target="example-1">
 new Brousel( document.querySelector('#example-1') , {
     arrows: false,
-    dots: true,
+    dots: false,
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: false,
     speed: 5000,
-    margin_horizontal: 5,
+    marginRight: 5,
+    marginLeft: 5,
     responsive: [
         {
             breakpoint: 450, // <= 450px
             settings: {
                 toShow: 1,
-                toScroll: 1
+                toScroll: 1,
+                dots: true
             }
         }
     ]
@@ -148,7 +151,8 @@ new Brousel( document.querySelector('#example-2') , {
     slidesToScroll: 3,
     autoplay: true,
     speed: 1000,
-    margin_horizontal: 5,
+    marginRight: 5,
+    marginLeft: 5,
     responsive: [
         {
             breakpoint: 450, // <= 450px
@@ -180,18 +184,20 @@ new Brousel( document.querySelector('#example-2') , {
             // Brousel Initialization
             new Brousel( document.querySelector('#example-1') , {
                 arrows: false,
-                dots: true,
+                dots: false,
                 slidesToShow: 3,
                 slidesToScroll: 1,
                 autoplay: false,
-                speed: 5000,
-                margin_horizontal: 5,
+                speed: 1000,
+                marginRight: 5,
+                marginLeft: 5,
                 responsive: [
                     {
                         breakpoint: 450, // <= 450px
                         settings: {
                             toShow: 1,
-                            toScroll: 1
+                            toScroll: 1,
+                            dots: true
                         }
                     }
                 ]
@@ -204,7 +210,8 @@ new Brousel( document.querySelector('#example-2') , {
                 slidesToScroll: 3,
                 autoplay: true,
                 speed: 1000,
-                margin_horizontal: 5,
+                marginRight: 5,
+                marginLeft: 5,
                 responsive: [
                     {
                         breakpoint: 450, // <= 450px

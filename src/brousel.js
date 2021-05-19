@@ -22,8 +22,10 @@ class Brousel {
         this.element = element;
         this.index = 0;
         this.width = null;
-        this.margin_horizontal = settings.margin_horizontal || 0;
-        this.margin_vertical = settings.margin_vertical || 0;
+        this.marginTop = settings.marginTop || 0;
+        this.marginBottom = settings.marginBottom || 0;
+        this.marginLeft = settings.marginLeft || 0;
+        this.marginRight = settings.marginRight || 0;
         this.arrows = settings.arrows;
         this.dots = settings.dots;
         this.autoplay = settings.autoplay;
@@ -149,8 +151,13 @@ class Brousel {
         this.contents = this.element.querySelectorAll('li');
         this.contentsCount = this.contents.length;
         this.contents.forEach((el) => {
-            el.style.width = ((this.width / this.toShow) - (this.margin_horizontal * 2)) + 'px';
-            el.style.margin = `${this.margin_vertical}px ${this.margin_horizontal}px`;
+            let margin_horizontal = this.marginLeft + this.marginRight;
+            let margin_vertical = this.marginTop + this.marginBottom;
+            el.style.width = ((this.width / this.toShow) - margin_horizontal) + 'px';
+            el.style.marginLeft = `${this.marginLeft}px`;
+            el.style.marginRight = `${this.marginRight}px`;
+            el.style.marginTop = `${this.marginTop}px`;
+            el.style.marginBottom = `${this.marginBottom}px`;
         });
         this.element.style.height = this.contents[0].offsetHeight;
     }
@@ -204,7 +211,7 @@ class Brousel {
     bscrollTo(scrollTarget, scrollDuration, callback) {
         var _ = this;
         var start = new Date().getTime()
-        var animateIndex = _.animate_id;
+        var animateIndex = this.animate_id;
         var animate = function () {
             var now = new Date().getTime() - start
             _.element.scrollLeft =

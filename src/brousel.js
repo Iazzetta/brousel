@@ -118,7 +118,7 @@ class Brousel {
         
         // check responsive
         for (let i in this.responsive) {
-            if ( this.width <= this.responsive[i].breakpoint ) {
+            if ( window.screen.width <= this.responsive[i].breakpoint ) {
                 for (let key in this.responsive[i].settings) this[key] = this.responsive[i].settings[key];
             }
         }

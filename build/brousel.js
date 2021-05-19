@@ -90,9 +90,9 @@ class Brousel {
             // build controls
             let insertHtml = `
                 <div class="brousel-control" id="${this.id}">
-                    ${this.arrows ? `<div class="brousel-prev" style="position:absolute;top: ${this.getOffset(this.element).top + (this.parent.offsetHeight - (this.element.offsetHeight / 2))}px;left: ${this.getOffset(this.element).left - 28}px;" id="${this.id}">${this.prev_content}</div>`:''}
+                    ${this.arrows ? `<div class="brousel-prev" id="${this.id}">${this.prev_content}</div>`:''}
                     ${this.dots ? dots:''}
-                    ${this.arrows ? `<div class="brousel-next" style="position:absolute;top: ${this.getOffset(this.element).top + (this.parent.offsetHeight - (this.element.offsetHeight / 2))}px;left: ${(this.getOffset(this.element).left + this.element.offsetWidth + 5)}px;" id="${this.id}">${this.next_content}</div>`:''}
+                    ${this.arrows ? `<div class="brousel-next" id="${this.id}">${this.next_content}</div>`:''}
                 </div>
             `
             this.element.insertAdjacentHTML('afterend', insertHtml);

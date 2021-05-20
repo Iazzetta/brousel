@@ -107,8 +107,8 @@ class Brousel {
             if (this.arrowSide == true) {
                 let brouselPrev = this.parent.querySelector('.brousel-prev');
                 let brouselNext = this.parent.querySelector('.brousel-next');
-                let diffOffsetLeft = this.element.offsetLeft - brouselPrev.offsetLeft;
-                let diffOffsetRight = (this.element.offsetLeft + this.element.offsetWidth) - brouselNext.offsetLeft - brouselNext.offsetWidth;
+                let diffOffsetLeft = this.element.offsetLeft - brouselPrev.offsetLeft - brouselPrev.offsetWidth;
+                let diffOffsetRight = (this.element.offsetLeft + this.element.offsetWidth) - brouselNext.offsetLeft;
                 brouselPrev.style.left = (Number(brouselPrev.style.left.replace('px', '')) + diffOffsetLeft) + 'px';
                 brouselNext.style.left = (Number(brouselNext.style.left.replace('px', '')) + diffOffsetRight) + 'px';
             }

@@ -18,26 +18,29 @@ window.addEventListener('resize', brouselManagerEvent);
 var _window = typeof window !== 'undefined' ? window : this;
 class Brousel {
     constructor(element, settings) {
-        this.id = Math.random();
-        this.element = element;
+        // copy
         this.index = 0;
-        this.width = null;
         this.marginTop = settings.marginTop || 0;
         this.marginBottom = settings.marginBottom || 0;
         this.marginLeft = settings.marginLeft || 0;
         this.marginRight = settings.marginRight || 0;
         this.arrows = settings.arrows;
+        this.arrowSide = settings.arrowSide || false;
         this.dots = settings.dots;
         this.autoplay = settings.autoplay;
         this.speed = settings.speed || 3000;
-        this.speed = settings.speed || 3000;
-        this.toScroll = null;
-        this.responsive = settings.responsive || [];
-        this.slidesToShow = settings.slidesToShow || 3;
-        this.slidesToScroll = settings.slidesToScroll || this.slidesToShow;
+        this.toShow = settings.toShow || 1;
+        this.toScroll = settings.toScroll || 1;
         this.prev_content = settings.prev_content || '<';
         this.next_content = settings.next_content || '>';
         this.dot_content = settings.dot_content || '-';
+        this.bk = {};
+        Object.assign(this.bk, this);
+        // not copy
+        this.id = Math.random();
+        this.element = element;
+        this.width = null;
+        this.responsive = settings.responsive || [];
         this.totalWidthContent = null;
         this.contents = null;
         this.contentsCount = null;
@@ -49,8 +52,6 @@ class Brousel {
         this.eventsCreated = false;
         this.lastOffsetLeft = this.element.offsetLeft;
         this.parent = this.element.parentElement;
-        this.toShow = this.slidesToShow;
-        this.toScroll = this.slidesToScroll;
         this.debug = settings.debug || false;
         this.easing = function (x, t, b, c, d) {
           return c * (t /= d) * t + b
@@ -69,6 +70,7 @@ class Brousel {
             white-space: nowrap;
             overflow: hidden;
             text-align: left;
+            ${this.arrows ? 'margin-top: 2em;':''}
         `
         
         // calc sizes of parent and build items size
@@ -88,14 +90,28 @@ class Brousel {
                 dots += `<button data-index="${i*this.toScroll}" class="brousel-dot${i == 0 ? ' selected':''}" id="${this.id}">${this.dot_content}</button>`;
             }
             // build controls
+            let arrowSideLeft = '';
+            let arrowSideRight = '';
+            if (this.arrowSide == true) {
+                arrowSideLeft = `style="position: relative;left:-${(this.element.offsetWidth / 2)}px;top:-${(this.element.offsetHeight / 2) + (this.contents[0].offsetHeight / 2)}px;"`;
+                arrowSideRight = `style="position: relative;left:${(this.element.offsetWidth / 2)}px;top:-${(this.element.offsetHeight / 2) + (this.contents[0].offsetHeight / 2)}px;"`;
+            }
             let insertHtml = `
                 <div class="brousel-control" id="${this.id}">
-                    ${this.arrows ? `<div class="brousel-prev" id="${this.id}">${this.prev_content}</div>`:''}
+                    ${this.arrows ? `<div ${arrowSideLeft} class="brousel-prev" id="${this.id}">${this.prev_content}</div>`:''}
                     ${this.dots ? dots:''}
-                    ${this.arrows ? `<div class="brousel-next" id="${this.id}">${this.next_content}</div>`:''}
+                    ${this.arrows ? `<div ${arrowSideRight} class="brousel-next" id="${this.id}">${this.next_content}</div>`:''}
                 </div>
             `
             this.element.insertAdjacentHTML('afterend', insertHtml);
+            if (this.arrowSide == true) {
+                let brouselPrev = this.parent.querySelector('.brousel-prev');
+                let brouselNext = this.parent.querySelector('.brousel-next');
+                let diffOffsetLeft = this.element.offsetLeft - brouselPrev.offsetLeft;
+                let diffOffsetRight = (this.element.offsetLeft + this.element.offsetWidth) - brouselNext.offsetLeft - brouselNext.offsetWidth;
+                brouselPrev.style.left = (Number(brouselPrev.style.left.replace('px', '')) + diffOffsetLeft) + 'px';
+                brouselNext.style.left = (Number(brouselNext.style.left.replace('px', '')) + diffOffsetRight) + 'px';
+            }
             
             // start controll events
             this.startControlEvents();
@@ -116,14 +132,17 @@ class Brousel {
         // update width
         this.width = this.element.offsetWidth;
         
-        // default
-        this.toScroll = this.slidesToScroll;
-        this.toShow = this.slidesToShow;
-        
         // check responsive
+        let in_responsive = false;
         for (let i in this.responsive) {
             if ( window.screen.width <= this.responsive[i].breakpoint ) {
+                in_responsive = true;
                 for (let key in this.responsive[i].settings) this[key] = this.responsive[i].settings[key];
+            }
+        }
+        if (!in_responsive) {
+            for (let key in this) {
+                if (key in this.bk) this[key] = this.bk[key];
             }
         }
         if (this.debug) {

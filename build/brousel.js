@@ -93,8 +93,9 @@ class Brousel {
             let arrowSideLeft = '';
             let arrowSideRight = '';
             if (this.arrowSide == true) {
-                arrowSideLeft = `style="position: relative;left:-${(this.element.offsetWidth / 2)}px;top:-${(this.element.offsetHeight / 2) + (this.contents[0].offsetHeight / 2)}px;"`;
-                arrowSideRight = `style="position: relative;left:${(this.element.offsetWidth / 2)}px;top:-${(this.element.offsetHeight / 2) + (this.contents[0].offsetHeight / 2)}px;"`;
+                // arrowSideLeft = `style="position: relative;left:-${(this.element.offsetWidth / 2)}px;top:-${(this.element.offsetHeight / 2) + (this.contents[0].offsetHeight / 2)}px;"`;
+                arrowSideLeft = `style="position: relative;left:-${(this.element.offsetWidth / 2)}px;top:-${(this.element.offsetHeight / 2) + (this.contents[0].offsetHeight / 2 + 16)}px;"`;
+                arrowSideRight = `style="position: relative;left:${(this.element.offsetWidth / 2)}px;top:-${(this.element.offsetHeight / 2) + (this.contents[0].offsetHeight / 2 + 16)}px;"`;
             }
             let insertHtml = `
                 <div class="brousel-control" id="${this.id}">
@@ -109,8 +110,11 @@ class Brousel {
                 let brouselNext = this.parent.querySelector('.brousel-next');
                 let diffOffsetLeft = this.element.offsetLeft - brouselPrev.offsetLeft - brouselPrev.offsetWidth;
                 let diffOffsetRight = (this.element.offsetLeft + this.element.offsetWidth) - brouselNext.offsetLeft;
+                let diffOffsetTop = this.contents[0].getBoundingClientRect().top - brouselPrev.getBoundingClientRect().top;
                 brouselPrev.style.left = (Number(brouselPrev.style.left.replace('px', '')) + diffOffsetLeft) + 'px';
                 brouselNext.style.left = (Number(brouselNext.style.left.replace('px', '')) + diffOffsetRight) + 'px';
+                brouselPrev.style.top = (Number(brouselPrev.style.top.replace('px', '')) + diffOffsetTop + (brouselPrev.offsetHeight)) + 'px';
+                brouselNext.style.top = (Number(brouselNext.style.top.replace('px', '')) + diffOffsetTop + (brouselPrev.offsetHeight)) + 'px';
             }
             
             // start controll events

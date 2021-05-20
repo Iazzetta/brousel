@@ -180,7 +180,7 @@ class Brousel {
         this.contents.forEach((el) => {
             let margin_horizontal = this.marginLeft + this.marginRight;
             let margin_vertical = this.marginTop + this.marginBottom;
-            el.style.width = ((this.width / this.toShow) - margin_horizontal) + 'px';
+            el.style.width = ((this.element.offsetWidth / this.toShow) - margin_horizontal ) + 'px';
             el.style.marginLeft = `${this.marginLeft}px`;
             el.style.marginRight = `${this.marginRight}px`;
             el.style.marginTop = `${this.marginTop}px`;
@@ -262,7 +262,7 @@ class Brousel {
         this.animationTimeout = setTimeout(function(){
             _.animate_id = Math.random();
             _.canSlide = false;
-            _.bscrollTo(_.contents[_.index].offsetLeft - _.element.offsetLeft, 100, function(){
+            _.bscrollTo((_.contents[_.index].offsetLeft - _.element.offsetLeft) - _.marginLeft, 100, function(){
                 if (_.dots) {
                     try {
                         document.querySelectorAll(`.brousel-dot[id="${_.id}"]`).forEach(function(el){

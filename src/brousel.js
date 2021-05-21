@@ -82,6 +82,8 @@ class Brousel {
         
         // dots and arrows if more than 1 index
         try { document.querySelector(`.brousel-control[id="${this.id}"]`).remove(); } catch(e) { /* don't exist */ }
+        try { document.querySelector(`.brousel-prev[id="${this.id}"]`).remove(); } catch(e) { /* don't exist */ }
+        try { document.querySelector(`.brousel-next[id="${this.id}"]`).remove(); } catch(e) { /* don't exist */ }
         if (this.nIndexes > 1 && (this.arrows || this.dots)) {
             // build dots
             let dots = "";
@@ -99,23 +101,33 @@ class Brousel {
             }
             let insertHtml = `
                 <div class="brousel-control" id="${this.id}">
-                    ${this.arrows ? `<div ${arrowSideLeft} class="brousel-prev" id="${this.id}">${this.prev_content}</div>`:''}
                     ${this.dots ? dots:''}
-                    ${this.arrows ? `<div ${arrowSideRight} class="brousel-next" id="${this.id}">${this.next_content}</div>`:''}
                 </div>
             `
             this.element.insertAdjacentHTML('afterend', insertHtml);
-            if (this.arrowSide == true) {
-                let brouselPrev = this.parent.querySelector('.brousel-prev');
-                let brouselNext = this.parent.querySelector('.brousel-next');
-                let diffOffsetLeft = this.element.offsetLeft - brouselPrev.offsetLeft - brouselPrev.offsetWidth;
-                let diffOffsetRight = (this.element.offsetLeft + this.element.offsetWidth) - brouselNext.offsetLeft;
-                let diffOffsetTop = this.contents[0].getBoundingClientRect().top - brouselPrev.getBoundingClientRect().top;
-                brouselPrev.style.left = (Number(brouselPrev.style.left.replace('px', '')) + diffOffsetLeft) + 'px';
-                brouselNext.style.left = (Number(brouselNext.style.left.replace('px', '')) + diffOffsetRight) + 'px';
-                brouselPrev.style.top = (Number(brouselPrev.style.top.replace('px', '')) + diffOffsetTop + (brouselPrev.offsetHeight)) + 'px';
-                brouselNext.style.top = (Number(brouselNext.style.top.replace('px', '')) + diffOffsetTop + (brouselPrev.offsetHeight)) + 'px';
+            if (this.arrows) {
+                let arrows = ['prev', 'next']
+                for ( let i in arrows ){
+                    let _a = document.createElement("div");
+                    _a.id = this.id;
+                    _a.innerHTML = this[`${arrows[i]}_content`];
+                    _a.classList.add(`brousel-${arrows[i]}`);
+                    this.parent.insertBefore(_a, this.element.nextSibling);
+                    if (arrows[i] == "prev") _a.style.float = 'left';
+                    else  _a.style.float = 'right';
+                }
             }
+            // if (this.arrowSide == true) {
+                // let brouselPrev = this.parent.querySelector('.brousel-prev');
+                // let brouselNext = this.parent.querySelector('.brousel-next');
+                // let diffOffsetLeft = this.element.offsetLeft - brouselPrev.offsetLeft - brouselPrev.offsetWidth;
+                // let diffOffsetRight = (this.element.offsetLeft + this.element.offsetWidth) - brouselNext.offsetLeft;
+                // let diffOffsetTop = this.contents[0].getBoundingClientRect().top - brouselPrev.getBoundingClientRect().top;
+                // brouselPrev.style.left = (Number(brouselPrev.style.left.replace('px', '')) + diffOffsetLeft) + 'px';
+                // brouselNext.style.left = (Number(brouselNext.style.left.replace('px', '')) + diffOffsetRight) + 'px';
+                // brouselPrev.style.top = (Number(brouselPrev.style.top.replace('px', '')) + diffOffsetTop + (brouselPrev.offsetHeight)) + 'px';
+                // brouselNext.style.top = (Number(brouselNext.style.top.replace('px', '')) + diffOffsetTop + (brouselPrev.offsetHeight)) + 'px';
+            // }
             
             // start controll events
             this.startControlEvents();

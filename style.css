@@ -4,12 +4,12 @@
     background-color: #e91e63;
     padding: 1em 0em;
     margin: 1em 0em;
+    text-align: center;
 }
 
 /* Brousel CSS example */
 .brousel-control {
     text-align: center;
-    margin-top: 1em;
 }
 .brousel-prev, .brousel-next {
     display: inline-block;
@@ -17,6 +17,8 @@
     background-color: #880e4f;
     border-radius: 20px;
     color: white;
+    top: -40px;
+    position: relative;
 }
 .brousel-dot {
     border: none;
